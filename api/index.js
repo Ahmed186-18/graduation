@@ -7,6 +7,14 @@ import { body, validationResult } from 'express-validator';
 import { assertDatabaseConnection } from './db.js';
 import { HeadOfFamily, Family, Admin, Institution } from './models.js';
 
+// Ensure models are initialized (only sync in development)
+if (process.env.NODE_ENV !== 'production') {
+  HeadOfFamily.sync();
+  Family.sync();
+  Admin.sync();
+  Institution.sync();
+}
+
 const app = express();
 
 // Database connection helper for serverless

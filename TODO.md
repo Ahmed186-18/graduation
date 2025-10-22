@@ -9,5 +9,6 @@
 
 ## Followup Steps
 - [x] Fixed serverless database connection issue by using ensureDatabaseConnection() per request
+- [x] Fixed Sequelize model initialization issues
 - [ ] Deploy to Vercel and verify environment variables are set
 - [ ] Test login endpoints on deployed version
