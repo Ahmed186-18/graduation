@@ -1,10 +1,10 @@
-const express = require('express');
-const cors = require('cors');
-const helmet = require('helmet');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const { body, validationResult } = require('express-validator');
-const { Sequelize, DataTypes } = require('sequelize');
+import express from 'express';
+import cors from 'cors';
+import helmet from 'helmet';
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+import { body, validationResult } from 'express-validator';
+import { Sequelize, DataTypes } from 'sequelize';
 
 const app = express();
 
@@ -279,4 +279,4 @@ app.get('/api/cases', async (req, res) => {
 });
 
 // Export the app for Vercel
-module.exports = app;
+export default app;

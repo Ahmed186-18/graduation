@@ -1,7 +1,7 @@
 {
   "name": "solace-lens-api",
   "version": "1.0.0",
-  "type": "commonjs",
+  "type": "module",
   "dependencies": {
     "express": "^4.21.1",
     "cors": "^2.8.5",
