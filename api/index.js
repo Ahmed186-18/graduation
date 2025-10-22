@@ -9,17 +9,16 @@ import { HeadOfFamily, Family, Admin, Institution } from './models.js';
 
 const app = express();
 
-// Initialize database connection
-let dbConnected = false;
-(async () => {
+// Database connection helper for serverless
+async function ensureDatabaseConnection() {
   try {
     await assertDatabaseConnection();
-    dbConnected = true;
-    console.log('Database connected successfully in API');
+    return true;
   } catch (error) {
-    console.error('Failed to connect to database:', error.message);
+    console.error('Database connection failed:', error.message);
+    return false;
   }
-})();
+}
 
 // Middleware
 app.use(helmet());
@@ -74,11 +73,12 @@ app.post('/api/auth/login',
       const { email, password, role } = req.body;
       const secret = process.env.JWT_SECRET || "secret";
 
-      if (role === "admin") {
-        if (!dbConnected) {
-          return res.status(503).json({ message: "Database not connected" });
-        }
+      const dbConnected = await ensureDatabaseConnection();
+      if (!dbConnected) {
+        return res.status(503).json({ message: "Database not connected" });
+      }
 
+      if (role === "admin") {
         const admin = await Admin.findOne({ where: { email } });
         if (!admin) {
           return res.status(401).json({ message: "Invalid credentials" });
@@ -94,10 +94,6 @@ app.post('/api/auth/login',
       }
 
       if (role === "institution") {
-        if (!dbConnected) {
-          return res.status(503).json({ message: "Database not connected" });
-        }
-
         const institution = await Institution.findOne({ where: { contactEmail: email } });
         if (!institution) {
           return res.status(401).json({ message: "Invalid credentials" });
@@ -132,6 +128,7 @@ app.post('/api/auth/family-login',
 
       const { idNumber, password } = req.body;
 
+      const dbConnected = await ensureDatabaseConnection();
       if (!dbConnected) {
         return res.status(503).json({ message: "Database not connected" });
       }

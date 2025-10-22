@@ -8,6 +8,6 @@
 - [x] Update VERCEL_DEPLOYMENT.md with environment variable setup instructions
 
 ## Followup Steps
-- [ ] Test API locally with database connection
+- [x] Fixed serverless database connection issue by using ensureDatabaseConnection() per request
 - [ ] Deploy to Vercel and verify environment variables are set
 - [ ] Test login endpoints on deployed version
