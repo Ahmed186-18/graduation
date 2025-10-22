@@ -61,6 +61,11 @@ const Family = sequelize.define('Family', {
 // Initialize database connection
 async function initDatabase() {
   try {
+    if (!process.env.DATABASE_URL) {
+      console.error('❌ DATABASE_URL environment variable is not set');
+      return;
+    }
+    
     await sequelize.authenticate();
     console.log('✅ Database connection established successfully');
     
@@ -78,10 +83,13 @@ async function initDatabase() {
         role: "admin"
       });
       console.log('✅ Default admin created: admin@solace.com / admin123');
+    } else {
+      console.log(`✅ Found ${adminCount} existing admin(s)`);
     }
   } catch (error) {
-    console.error('❌ Database connection failed:', error);
-    throw error;
+    console.error('❌ Database connection failed:', error.message);
+    console.error('Error details:', error);
+    // Don't throw error to prevent function from failing completely
   }
 }
 
@@ -188,15 +196,24 @@ app.post('/api/auth/family-login',
   handleValidation,
   async (req, res) => {
     try {
+      console.log('Family login attempt:', { idNumber: req.body.idNumber });
+      
+      if (!process.env.DATABASE_URL) {
+        console.error('DATABASE_URL not set');
+        return res.status(500).json({ message: "Database configuration error" });
+      }
+
       const { idNumber, password } = req.body;
       
       const head = await HeadOfFamily.findOne({ where: { idNumber } });
       if (!head) {
+        console.log('No head of family found for ID:', idNumber);
         return res.status(401).json({ message: "Invalid credentials" });
       }
 
       const ok = await bcrypt.compare(password, head.passwordHash);
       if (!ok) {
+        console.log('Password mismatch for ID:', idNumber);
         return res.status(401).json({ message: "Invalid credentials" });
       }
 
@@ -206,6 +223,7 @@ app.post('/api/auth/family-login',
       // Fetch family info if exists
       const family = await Family.findOne({ where: { headId: head.id } });
 
+      console.log('Family login successful for:', head.fullName);
       return res.json({
         token,
         head: { 
@@ -221,7 +239,8 @@ app.post('/api/auth/family-login',
       });
       
     } catch (error) {
-      console.error('Family login error:', error);
+      console.error('Family login error:', error.message);
+      console.error('Full error:', error);
       res.status(500).json({ message: "Internal server error" });
     }
   }
