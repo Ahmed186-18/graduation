@@ -1,24 +1,13 @@
-# TODO: Deploy to Vercel
+# Database Integration for Vercel Deployment
 
 ## Tasks
-- [x] Create vercel.json configuration
-- [x] Create API serverless functions (health, auth/login, auth/family-login, register, cases, welcome, hello)
-- [x] Remove local proxy from vite.config.ts
-- [x] Create API middleware for database connection
-- [x] Update package.json with vercel-build script
-- [x] Create api/package.json for serverless dependencies
-- [x] Create server/vercel-env.js for environment setup
-- [x] Update middleware to load environment variables
+- [x] Create `api/db.js` with Sequelize database connection (adapted from `server/src/db.ts`)
+- [x] Create `api/models.js` with Sequelize model definitions (adapted from `server/src/models.ts`)
+- [x] Update `api/index.js` to use database for authentication (family login, admin login)
+- [x] Add password hashing/verification using bcryptjs
+- [x] Update VERCEL_DEPLOYMENT.md with environment variable setup instructions
 
-## Next Steps
-- [ ] Set up Vercel project and connect repository
-- [ ] Configure environment variables in Vercel dashboard (DATABASE_URL, JWT_SECRET)
-- [ ] Deploy the application
-- [ ] Test API endpoints after deployment
-- [ ] Update frontend API calls to use production URLs if needed
-
-## Notes
-- Backend has been converted to Vercel serverless functions
-- Frontend proxy removed, will call /api endpoints directly
-- Database connection handled in middleware
-- Environment variables loaded from server/.env in development and Vercel env vars in production
+## Followup Steps
+- [ ] Test API locally with database connection
+- [ ] Deploy to Vercel and verify environment variables are set
+- [ ] Test login endpoints on deployed version

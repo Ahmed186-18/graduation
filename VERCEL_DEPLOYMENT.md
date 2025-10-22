@@ -29,9 +29,9 @@ Set these environment variables in your Vercel dashboard:
 
 #### Required Environment Variables:
 - `NODE_ENV=production`
-- `DATABASE_URL` (if using a database)
-- `JWT_SECRET` (for authentication)
-- `CORS_ORIGIN` (your Vercel domain)
+- `DATABASE_URL` (PostgreSQL connection string, required for database connectivity)
+- `JWT_SECRET` (for authentication, use a strong random string)
+- `CORS_ORIGIN` (your Vercel domain, e.g., https://your-app.vercel.app)
 
 #### Optional Environment Variables:
 - `PORT` (defaults to 3000)
