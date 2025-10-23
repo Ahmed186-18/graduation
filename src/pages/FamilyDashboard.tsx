@@ -64,7 +64,13 @@ async function loadNotificationsFor(token: string) {
       throw new Error("فشل في تحميل الإشعارات");
     }
 
-    const data = await response.json();
+    let data;
+    try {
+      data = await response.json();
+    } catch (parseError) {
+      console.error("خطأ في تحليل الاستجابة:", parseError);
+      throw new Error("فشل في تحليل استجابة الخادم");
+    }
     return data;
   } catch (error) {
     console.error("خطأ في تحميل الإشعارات:", error);
@@ -130,7 +136,13 @@ const FamilyDashboard = () => {
         throw new Error("فشل في تحميل بيانات العائلة");
       }
 
-      const data = await response.json();
+      let data;
+      try {
+        data = await response.json();
+      } catch (parseError) {
+        console.error("خطأ في تحليل الاستجابة:", parseError);
+        throw new Error("فشل في تحليل استجابة الخادم");
+      }
 
       if (!data.headOfFamily || !data.family) {
         throw new Error("بيانات العائلة غير صحيحة");
@@ -199,7 +211,13 @@ const FamilyDashboard = () => {
         throw new Error("فشل في تحميل طلبات التعديل");
       }
 
-      const data = await response.json();
+      let data;
+      try {
+        data = await response.json();
+      } catch (parseError) {
+        console.error("خطأ في تحليل الاستجابة:", parseError);
+        throw new Error("فشل في تحليل استجابة الخادم");
+      }
       setRequests(data);
     } catch (error) {
       console.error("خطأ في تحميل طلبات التعديل:", error);
@@ -257,7 +275,13 @@ const FamilyDashboard = () => {
       });
 
       if (!response.ok) {
-        const errorData = await response.json();
+        let errorData;
+        try {
+          errorData = await response.json();
+        } catch (parseError) {
+          console.error("خطأ في تحليل الاستجابة:", parseError);
+          throw new Error("فشل في تحليل استجابة الخادم");
+        }
         throw new Error(errorData.message || "فشل إرسال طلب تحديث المنطقة");
       }
 
@@ -348,7 +372,13 @@ const FamilyDashboard = () => {
       });
 
       if (!response.ok) {
-        const errorData = await response.json();
+        let errorData;
+        try {
+          errorData = await response.json();
+        } catch (parseError) {
+          console.error("خطأ في تحليل الاستجابة:", parseError);
+          throw new Error("فشل في تحليل استجابة الخادم");
+        }
         throw new Error(errorData.message || "فشل إرسال طلب تعديل الفرد");
       }
 
@@ -390,7 +420,13 @@ const FamilyDashboard = () => {
       });
 
       if (!response.ok) {
-        const errorData = await response.json();
+        let errorData;
+        try {
+          errorData = await response.json();
+        } catch (parseError) {
+          console.error("خطأ في تحليل الاستجابة:", parseError);
+          throw new Error("فشل في تحليل استجابة الخادم");
+        }
         throw new Error(errorData.message || "فشل إرسال طلب حذف الفرد");
       }
 
@@ -417,7 +453,13 @@ const FamilyDashboard = () => {
       });
 
       if (!response.ok) {
-        const errorData = await response.json();
+        let errorData;
+        try {
+          errorData = await response.json();
+        } catch (parseError) {
+          console.error("خطأ في تحليل الاستجابة:", parseError);
+          throw new Error("فشل في تحليل استجابة الخادم");
+        }
         throw new Error(errorData.message || "فشل إلغاء الطلب");
       }
 

@@ -29,15 +29,22 @@ const AdminSettings = () => {
       return;
     }
 
-    fetch('/api/admin/profile', {
+    const response = await fetch('/api/admin/profile', {
       headers: {
         'Authorization': `Bearer ${token}`
       }
-    })
-      .then(r => r.json())
-      .then(data => setProfile(data))
-      .catch(() => setProfile({ email: 'admin@gaza-life.com' }))
-      .finally(() => setLoading(false));
+    });
+
+    let data;
+    try {
+      data = await response.json();
+    } catch (parseError) {
+      console.error("خطأ في تحليل الاستجابة:", parseError);
+      data = { email: 'admin@gaza-life.com' };
+    }
+
+    setProfile(data);
+    setLoading(false);
   }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -75,7 +82,13 @@ const AdminSettings = () => {
         })
       });
 
-      const data = await response.json();
+      let data;
+      try {
+        data = await response.json();
+      } catch (parseError) {
+        console.error("خطأ في تحليل الاستجابة:", parseError);
+        throw new Error("فشل في تحليل استجابة الخادم");
+      }
 
       if (response.ok) {
         setMessage({ type: 'success', text: 'تم تغيير كلمة المرور بنجاح' });

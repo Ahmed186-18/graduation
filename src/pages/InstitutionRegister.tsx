@@ -49,7 +49,13 @@ const InstitutionRegister = () => {
         body: JSON.stringify({ name, contactEmail: email, password, about, services, regions }),
       });
 
-      const data = await response.json();
+      let data;
+      try {
+        data = await response.json();
+      } catch (parseError) {
+        console.error("خطأ في تحليل الاستجابة:", parseError);
+        throw new Error("فشل في تحليل استجابة الخادم");
+      }
 
       if (!response.ok) {
         if (response.status === 409) {

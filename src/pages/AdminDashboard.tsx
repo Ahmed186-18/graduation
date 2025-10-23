@@ -178,8 +178,16 @@ const AdminDashboard = () => {
         }
       });
 
+      let errorData;
+      try {
+        errorData = await response.json();
+      } catch (parseError) {
+        console.error("خطأ في تحليل الاستجابة:", parseError);
+        alert('حدث خطأ غير متوقع');
+        return;
+      }
+
       if (!response.ok) {
-        const errorData = await response.json();
         alert(`خطأ: ${errorData.message || 'حدث خطأ غير متوقع'}`);
         return;
       }
@@ -225,7 +233,14 @@ const AdminDashboard = () => {
       });
 
       if (!response.ok) {
-        const errorData = await response.json();
+        let errorData;
+        try {
+          errorData = await response.json();
+        } catch (parseError) {
+          console.error("خطأ في تحليل الاستجابة:", parseError);
+          alert('حدث خطأ غير متوقع');
+          return;
+        }
         alert(`خطأ: ${errorData.message || 'حدث خطأ غير متوقع'}`);
         return;
       }
