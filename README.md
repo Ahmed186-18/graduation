@@ -1,8 +1,4 @@
-# Solace Lens - Humanitarian Needs Assessment Platform
-
-## Project info
-
-**URL**: https://lovable.dev/projects/59f14ed1-5c2b-4ea0-8aac-114913b5b9aa
+# Humanitarian Needs Assessment Platform
 
 ## Development
 
@@ -22,17 +18,6 @@ Frontend: React + Vite + shadcn-ui + Tailwind CSS
 
 Backend: Node.js (Express) with PostgreSQL (Sequelize ORM) for database integration
 
-## Environment
-
-Create `server/.env` for local development and set environment variables in Vercel for production:
-
-```
-PORT=4000
-DATABASE_URL=postgres://postgres:postgres@localhost:5432/solace_lens
-JWT_SECRET=change_me
-CORS_ORIGIN=http://localhost:8080
-```
-
 ## API Endpoints
 
 - GET `/api/health` – Health check
@@ -50,17 +35,3 @@ This project is built with:
 - React
 - shadcn-ui
 - Tailwind CSS
-
-## How can I deploy this project?
-
-For Vercel deployment, see `VERCEL_DEPLOYMENT.md` for detailed instructions.
-
-For Lovable deployment, simply open [Lovable](https://lovable.dev/projects/59f14ed1-5c2b-4ea0-8aac-114913b5b9aa) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
