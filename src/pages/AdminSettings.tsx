@@ -23,28 +23,32 @@ const AdminSettings = () => {
   });
 
   useEffect(() => {
-    const token = localStorage.getItem('adminToken');
-    if (!token) {
-      window.location.href = '/admin-login';
-      return;
-    }
-
-    const response = await fetch('/api/admin/profile', {
-      headers: {
-        'Authorization': `Bearer ${token}`
+    const fetchProfile = async () => {
+      const token = localStorage.getItem('adminToken');
+      if (!token) {
+        window.location.href = '/admin-login';
+        return;
       }
-    });
 
-    let data;
-    try {
-      data = await response.json();
-    } catch (parseError) {
-      console.error("خطأ في تحليل الاستجابة:", parseError);
-      data = { email: 'admin@gaza-life.com' };
-    }
+      const response = await fetch('/api/admin/profile', {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
 
-    setProfile(data);
-    setLoading(false);
+      let data;
+      try {
+        data = await response.json();
+      } catch (parseError) {
+        console.error("خطأ في تحليل الاستجابة:", parseError);
+        data = { email: 'admin@gaza-life.com' };
+      }
+
+      setProfile(data);
+      setLoading(false);
+    };
+
+    fetchProfile();
   }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
