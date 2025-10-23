@@ -1,14 +1,15 @@
-# Database Integration for Vercel Deployment
+# TODO: Fix npm audit issues and deprecated packages
 
-## Tasks
-- [x] Create `api/db.js` with Sequelize database connection (adapted from `server/src/db.ts`)
-- [x] Create `api/models.js` with Sequelize model definitions (adapted from `server/src/models.ts`)
-- [x] Update `api/index.js` to use database for authentication (family login, admin login)
-- [x] Add password hashing/verification using bcryptjs
-- [x] Update VERCEL_DEPLOYMENT.md with environment variable setup instructions
+## Steps to Complete
 
-## Followup Steps
-- [x] Fixed serverless database connection issue by using ensureDatabaseConnection() per request
-- [x] Fixed Sequelize model initialization issues
-- [ ] Deploy to Vercel and verify environment variables are set
-- [ ] Test login endpoints on deployed version
+- [x] Run `npm audit fix` to address the esbuild vulnerability
+- [x] Replace json2csv with fast-csv: Install fast-csv, update import in server/src/routes.ts, adjust CSV parsing code
+- [x] Update other dependencies where possible to resolve deprecations (rimraf, lodash.get, inflight, glob - check if npm audit fix handles them)
+- [ ] Note validator vulnerabilities (no fix available, may require manual review or alternative libraries)
+- [ ] Test CSV export functionality after changes
+- [ ] Run npm audit again to verify fixes
+
+## Progress Tracking
+
+- Started: 2023-10-01 12:00 PM
+- Completed steps will be marked with [x]

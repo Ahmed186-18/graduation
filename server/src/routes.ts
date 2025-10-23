@@ -9,7 +9,7 @@ import { Op } from "sequelize";
 import { AuthRequest, DatabaseError, FamilyRegistrationRequest, FamilyWithMembers } from "./types";
 import { calculateNeedIndex, defaultThresholds, defaultWeights } from "./need-index";
 import { requireAuth } from "./auth";
-import { Parser } from "json2csv";
+import * as fastcsv from "fast-csv";
 
 const router = Router();
 
@@ -329,11 +329,11 @@ router.get("/export/cases", requireAuth(["admin", "institution"]), async (req, r
     childrenCount: f.childrenCount,
     address: f.address,
   }));
-  const parser = new Parser();
-  const csv = parser.parse(rows);
+
   res.header("Content-Type", "text/csv");
   res.attachment("cases.csv");
-  res.send(csv);
+
+  fastcsv.write(rows, { headers: true }).pipe(res);
 });
 
 

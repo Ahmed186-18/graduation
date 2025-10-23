@@ -1,4 +1,4 @@
-import { DataTypes, InferAttributes, InferCreationAttributes, Model } from "sequelize";
+import Sequelize, { DataTypes, InferAttributes, InferCreationAttributes, Model } from "sequelize";
 import { sequelize } from "./db.js";
 
 export class HeadOfFamily extends Model<InferAttributes<HeadOfFamily>, InferCreationAttributes<HeadOfFamily>> {
