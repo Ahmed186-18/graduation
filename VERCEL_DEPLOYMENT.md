@@ -1,11 +1,11 @@
 # Vercel Deployment Guide for Solace Lens
 
 ## Project Structure
-This project is now configured for Vercel deployment with the following structure:
+This project is configured for Vercel deployment of the frontend only. The backend is handled separately.
 
 - **Frontend**: React + Vite application (builds to `dist/`)
-- **Backend**: Express.js API routes in `api/` directory
-- **Configuration**: `vercel.json` handles routing and build settings
+- **Backend**: Express.js server in `server/` directory (deploy separately, e.g., to Heroku, Railway, or another platform)
+- **Configuration**: `vercel.json` handles routing and build settings for the frontend
 
 ## Deployment Steps
 
@@ -25,17 +25,11 @@ vercel
 ```
 
 ### 4. Environment Variables
-Set these environment variables in your Vercel dashboard:
-
-#### Required Environment Variables:
-- `NODE_ENV=production`
-- `DATABASE_URL` (PostgreSQL connection string, required for database connectivity)
-- `JWT_SECRET` (for authentication, use a strong random string)
-- `CORS_ORIGIN` (your Vercel domain, e.g., https://your-app.vercel.app)
+Set these environment variables in your Vercel dashboard if needed for the frontend (e.g., API base URL):
 
 #### Optional Environment Variables:
-- `PORT` (defaults to 3000)
-- Any other environment variables your application needs
+- `VITE_API_BASE_URL` (URL of your separately deployed backend, e.g., https://your-backend.herokuapp.com)
+- Any other frontend-specific environment variables your application needs
 
 ### 5. Custom Domain (Optional)
 - Go to your Vercel dashboard
@@ -45,18 +39,12 @@ Set these environment variables in your Vercel dashboard:
 
 ## API Endpoints
 
-The following API endpoints are available:
-
-- `GET /api/health` - Health check
-- `POST /api/auth/login` - User login
-- `POST /api/register` - User registration
-- `GET /api/cases` - Get cases (placeholder)
+The API endpoints are handled by the separate backend deployment. Refer to the backend documentation for available endpoints.
 
 ## Build Configuration
 
 - **Frontend Build**: Uses Vite to build React app to `dist/`
-- **API Functions**: Each file in `api/` becomes a serverless function
-- **Routing**: All `/api/*` requests go to API functions, everything else serves the React app
+- **Routing**: All requests serve the React app (SPA routing)
 
 ## Development vs Production
 
@@ -66,6 +54,6 @@ The following API endpoints are available:
 ## Troubleshooting
 
 1. **Build Errors**: Check that all dependencies are in `package.json`
-2. **API Errors**: Verify API functions are properly exported
-3. **CORS Issues**: Update CORS origins in API functions
-4. **Environment Variables**: Ensure all required env vars are set in Vercel dashboard
+2. **API Errors**: Ensure the backend is deployed separately and the frontend is configured to point to the correct API URL
+3. **CORS Issues**: Configure CORS in your separate backend deployment
+4. **Environment Variables**: Ensure any frontend-specific env vars are set in Vercel dashboard
